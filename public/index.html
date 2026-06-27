@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="meet.css">
 
@@ -21,9 +23,33 @@
     
 
 <div id="submitted" style="display:none;">
-<!---<div class="potvrdeno"> <section class="status active"> <div class="anim-container text-center success-screen"> <div class="clover">✔️</div> <div class="status-text"> <span>POTVRDENO </span> </div> <div class="status-text"> <span class="predomislila"><a href="/index.html"> Predomislila sam se..</a> </span> </div> </div> </section> </div>
--->   
-    <section class="status active">
+
+<div class="potvrdeno">
+    <section class="status">
+        <div class="anim-container text-center success-screen">
+
+            <div class="clover">✔️</div>
+
+            <div class="status-text">
+                <span>POTVRĐENO</span>
+            </div>
+
+            <div class="status-text">
+                <div id="meeting-info"></div>
+            </div>
+
+            <div class="status-text">
+                <span class="predomislila">
+                    <a href="/index.html">Predomislila sam se..</a>
+                </span>
+            </div>
+
+        </div>
+    </section>
+</div>
+
+   
+    <section class="status active ">
                 <div class="anim-container text-center success-screen">
                     <div class="clover">🍀</div>
                     <div class="status-text">
@@ -73,19 +99,18 @@
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelector(".predomislila").addEventListener("click", async () => {
-        console.log("Predomislila se");
+document.addEventListener("click", async (e) => {
+    if (!e.target.closest(".predomislila")) return;
 
-        const res = await fetch('/api/reset', { method: 'POST' });
-        const data = await res.json();
+    console.log("Predomislila se");
 
-        if (data.success) {
-            checkStatus();
-        }
-    });
+    const res = await fetch('/api/reset', { method: 'POST' });
+    const data = await res.json();
+
+    if (data.success) {
+        await checkStatus(); // IMPORTANT: wait for UI sync
+    }
 });
-
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
@@ -97,6 +122,27 @@ document.getElementById("startBtn").addEventListener("click", () => {
 
 });
 
+
+
+
+function formatMeeting(data) {
+    const d = data?.data || {};
+
+    return `
+        <div class="meeting-card" style="margin-top:20px;">
+            <div>📅 ${d.day || '-'}. lipnja </div>
+            <div>🕒 ${d.time || '-'} sati</div>
+            <div>📍 &nbsp ${d.location || '-'}</div>
+        </div>
+    `;
+}
+
+function renderMeeting(data) {
+    const el = document.getElementById("meeting-info");
+    if (!el) return;
+
+    el.innerHTML = formatMeeting(data);
+}
 
 
 async function checkStatus() {
@@ -113,8 +159,18 @@ async function checkStatus() {
 
             document.getElementById('notSubmitted').style.display = 'none';
             document.getElementById('submitted').style.display = 'block';
+
+
+
+                                renderMeeting(data);
+
+
+
         } else {
             console.log("SHOW NOT SUBMITTED UI");
+
+
+
 
             document.getElementById('notSubmitted').style.display = 'block';
             document.getElementById('submitted').style.display = 'none';
@@ -125,6 +181,11 @@ async function checkStatus() {
     }
 }
 
+
+
+
+
+
 checkStatus();
 setInterval(checkStatus, 2000);
 
@@ -132,11 +193,19 @@ setInterval(checkStatus, 2000);
 console.log("submitted element:", document.getElementById("submitted"));
 console.log("notSubmitted element:", document.getElementById("notSubmitted"));
 
-document.getElementById('submitted').style.display = 'block';
-document.getElementById('notSubmitted').style.display = 'none';
 
 
 
+
+
+
+
+
+
+
+    
+
+  
 
 
 
