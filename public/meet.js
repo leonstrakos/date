@@ -103,14 +103,14 @@ createWheel(
     document.getElementById('dayWheel'),
     [
 "",
-    "29. lipnja", "30. lipnja",
-    "1. srpnja", "2. srpnja", "3. srpnja", "4. srpnja", "5. srpnja",
-    "6. srpnja", "7. srpnja", "8. srpnja", "9. srpnja", "10. srpnja",
-    "11. srpnja", "12. srpnja", "13. srpnja", "14. srpnja", "15. srpnja",
-    "16. srpnja", "17. srpnja", "18. srpnja", "19. srpnja", "20. srpnja",
-    "21. srpnja", "22. srpnja", "23. srpnja", "24. srpnja", "25. srpnja",
-    "26. srpnja", "27. srpnja", "28. srpnja", "29. srpnja", "30. srpnja",
-    "31. srpnja",
+    "29.6.", "30.6.",
+    "1.7.", "2.7.", "3.7.", "4.7.", "5.7.",
+    "6.7.", "7.7.", "8.7.", "9.7.", "10.7.",
+    "11.7.", "12.7.", "13.7.", "14.7.", "15.7.",
+    "16.7.", "17.7.", "18.7.", "19.7.", "20.7.",
+    "21.7.", "22.7.", "23.7.", "24.7.", "25.7.",
+    "26.7.", "27.7.", "28.7.", "29.7.", "30.7.",
+    "31.7.",
     ""
     ]
 );
