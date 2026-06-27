@@ -101,15 +101,20 @@ function createWheel(el, items) {
 /* DAYS */
 createWheel(
     document.getElementById('dayWheel'),
-    Array.from({ length: 30 }, (_, i) => 1 + i)
+    [
+      "", "", "1", "2d", "3", "4", "5", "6", "7",
+        "8", "9h", "10", "11", "12", "12", "14", 
+        "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25",
+        "26", "27", "28", "29", "30", "", ""
+    ]
 );
 
 /* TIMES */
 createWheel(
     document.getElementById('timeWheel'),
     [
-        "12h", "13h", "14h", "15h", "16h", "17h",
-        "18h", "19h", "20h", "21h", "22h"
+      "", "", "12h", "13h", "14h", "15h", "16h", "17h",
+        "18h", "19h", "20h", "21h", "22h", "", ""
     ]
 );
 
