@@ -137,11 +137,11 @@ async function submit() {
     const data = await response.json();
 
     if (data.success) {
+        spawnBlossoms(100); // 🌸✨
         currentStep = steps.length - 1;
         showStep(currentStep);
     }
 }
-
 
 
 
@@ -185,4 +185,27 @@ function updateGallery() {
 
     // Sakrij progress bar na zadnjem (success) koraku radi čišćeg dizajna
 
+}
+
+
+
+
+
+function spawnBlossoms(count = 25) {
+    const container = document.getElementById("celebration");
+
+    for (let i = 0; i < count; i++) {
+        const el = document.createElement("div");
+        el.className = "blossom";
+        el.textContent = "🌸";
+
+        el.style.left = Math.random() * 100 + "vw";
+        el.style.top = "100vh";
+        el.style.fontSize = (16 + Math.random() * 20) + "px";
+        el.style.animationDuration = (1.8 + Math.random() * 1.5) + "s";
+
+        container.appendChild(el);
+
+        setTimeout(() => el.remove(), 3000);
+    }
 }
