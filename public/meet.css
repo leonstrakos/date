@@ -152,6 +152,10 @@ h1 {
     width: 200px;
 }
 
+#dayWheel {
+    width: 400px;
+}
+
 .item {
     font-size: 3.5rem;
     text-align: center;
