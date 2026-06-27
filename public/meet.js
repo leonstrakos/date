@@ -102,10 +102,16 @@ function createWheel(el, items) {
 createWheel(
     document.getElementById('dayWheel'),
     [
-        "", "1.", "2.", "3.", "4.", "5.", "6.", "7.",
-        "8.", "9.", "10.", "11.", "12.", "13.", "14.", 
-        "15.", "16.", "17.", "18.", "19.", "20.", "21.", "22.", "23.", "24.", "25.",
-        "26.", "27.", "28.", "29.", "30.", ""
+"",
+    "29. lipnja", "30. lipnja",
+    "1. srpnja", "2. srpnja", "3. srpnja", "4. srpnja", "5. srpnja",
+    "6. srpnja", "7. srpnja", "8. srpnja", "9. srpnja", "10. srpnja",
+    "11. srpnja", "12. srpnja", "13. srpnja", "14. srpnja", "15. srpnja",
+    "16. srpnja", "17. srpnja", "18. srpnja", "19. srpnja", "20. srpnja",
+    "21. srpnja", "22. srpnja", "23. srpnja", "24. srpnja", "25. srpnja",
+    "26. srpnja", "27. srpnja", "28. srpnja", "29. srpnja", "30. srpnja",
+    "31. srpnja",
+    ""
     ]
 );
 
@@ -113,7 +119,7 @@ createWheel(
 createWheel(
     document.getElementById('timeWheel'),
     [
-      "", "12h", "13h", "14h", "15h", "16h", "17h",
+      "","10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h",
         "18h", "19h", "20h", "21h", "22h", ""
     ]
 );
