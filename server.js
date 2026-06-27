@@ -1,0 +1,102 @@
+const express = require('express');
+const path = require('path');   
+const fs = require('fs-extra');
+const app = express();
+const PORT = 3005;
+const DB_FILE = path.join(__dirname, 'db.json');
+
+
+// Middleware za čitanje podataka iz formi / JSON-a
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Služenje statičnih datoteka (HTML, CSS, JS) iz trenutnog foldera
+app.use(express.static(path.join(__dirname, "public")));
+
+
+
+
+// Pomoćna funkcija za čitanje baze
+async function readDB() {
+    if (!await fs.pathExists(DB_FILE)) {
+        await fs.writeJson(DB_FILE, { submitted: false }, { spaces: 4 });
+    }
+    return fs.readJson(DB_FILE);
+}
+
+async function writeDB(data) {
+    await fs.writeJson(DB_FILE, data, { spaces: 4 });
+}
+
+
+// 1. Ruta za provjeru statusa 
+app.get('/api/status', async (req, res) => {
+    
+    const db = await readDB();
+
+    console.log("STATUS HIT:", db);
+
+    res.json({
+        submitted: db.submitted || false,
+        data: db.data || null
+    });
+});
+
+
+
+
+// 2. Ruta za spremanje podataka 
+app.post('/api/submit', async (req, res) => {
+        console.log("SUBMIT HIT");
+    const { day, time, location } = req.body;
+
+    const db = await readDB();
+        console.log("BEFORE:", db);
+
+    db.submitted = true;
+    db.data = {
+        day,
+        time,
+        location,
+        timestamp: new Date().toLocaleString('hr-HR')
+    };
+
+    await writeDB(db);
+        console.log("AFTER:", db);
+
+    res.json({ success: true });
+});
+
+
+
+
+
+
+
+// 3. Ruta ako klikne "Predomislila sam se"
+app.post('/api/reset', async (req, res) => {
+    const db = await readDB();
+
+    db.submitted = false;
+    db.data = null;
+
+    await writeDB(db);
+
+    res.json({ success: true });
+});
+
+
+
+
+app.listen(PORT, () => {
+    console.log(`Server radi na http://localhost:${PORT}`);
+});
+
+
+
+
+
+
+
+
+

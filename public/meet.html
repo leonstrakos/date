@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Za Helenu</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="meet.css">
+</head>
+
+<body>
+
+
+
+<div class="app">
+
+
+    
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="steps-slider" id="stepsSlider">
+
+
+
+
+    <!-- STEP 1 
+    <section class="step active">
+
+        <h1>Kako bi ti bilo najugodnije?</h1>
+
+        <div class="options">
+            <button class="option" data-value="kava">Kava</button>
+            <button class="option" data-value="šetnja">Šetnja</button>
+            <button class="option" data-value="razgovor">Razgovor</button>
+        </div>
+
+        <button class="next">Dalje</button>
+    </section>
+-->
+    <section class="step active">
+        <h1>Koji dan ti odgovara?</h1>
+
+        <div class="wheel" id="dayWheel"></div>
+
+        <button class="next">Dalje</button>
+    </section>
+
+
+
+
+    <!-- STEP 3 -->
+    <section class="step">
+        <h1>Vrijeme</h1>
+
+        <div class="wheel" id="timeWheel"></div>
+
+        <button class="next">Dalje</button>
+    </section>
+
+
+
+
+    <!-- STEP 4 -->
+    <section class="step">
+        <h1>Gdje?</h1>
+
+        <input type="text" placeholder="Park..." id="location"/>
+
+        <button class="next">Pošalji</button>
+    </section>
+
+
+
+    <!--Step 5-->
+    <section class="step step-wrapper">
+                <div class="anim-container text-center success-screen">
+                    <div class="clover">🍀</div>
+                    <div class="status-text">
+                        <span>Poslano <br><span class="potvrdim"> potvrdim ovdje</span></span>
+                        <span class="dots-loader">
+                            <span>.</span><span>.</span><span>.</span>
+                        </span>
+                    </div>
+                    <div class="status-text">
+                       <span class="predomislila">Otkazi..</span>
+                    </div>
+                </div>
+    </section>
+
+
+</div>
+
+<script src="meet.js"></script>
+</body>
+</html>

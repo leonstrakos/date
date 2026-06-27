@@ -1,0 +1,83 @@
+──────────────────────────────
+
+        Za Helenu
+
+Ako si ovdje, drago mi je.
+
+        [ Nastavi ]
+
+──────────────────────────────
+──────────────────────────────
+
+Kako bi ti bilo najugodnije?
+
+      ○ Kava
+
+      ○ Šetnja
+
+      ○ Samo razgovor
+
+        [ Dalje ]
+
+──────────────────────────────
+──────────────────────────────
+
+        Kada?
+
+           17
+           18
+>          19
+           20
+           21
+
+      (wheel picker)
+
+──────────────────────────────
+──────────────────────────────
+
+Vrijeme
+
+      18:00
+      18:30
+>     19:00
+      19:30
+
+──────────────────────────────
+──────────────────────────────
+
+Gdje?
+
+┌─────────────────────────┐
+│ Park...                 │
+└─────────────────────────┘
+
+        [ Pošalji ]
+
+──────────────────────────────
+HTML
+CSS
+about 150–200 lines of vanilla JS
+CSS transform: translateX(...)
+opacity
+transition: 400ms cubic-bezier(...)
+no frameworks.
+
+For the picker I'd avoid <select>. I'd make a custom scroll wheel with CSS scroll snapping so the numbers are huge (around 4rem) and the selected one sits in the middle, similar to the iPhone date picker.
+
+I can definitely help you build that. It would end up looking much closer to an Apple interface than a standard web form.
+
+a beautiful Apple-inspired UI,
+custom scroll-wheel date pickers,
+smooth transitions,
+minimalist typography,
+polished CSS and JavaScript,
+
+
+
+
+
+
+smooth slide transitions
+progress dots
+back button
+validation per step

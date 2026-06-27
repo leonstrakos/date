@@ -1,0 +1,377 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: #fff;
+    color: #111;
+    overflow: hidden;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+/* STEP SYSTEM */
+
+
+.step {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    transform: translateX(40px);
+    transition: all 0.5s cubic-bezier(.2,.8,.2,1);
+
+    pointer-events: none;
+}
+
+.step.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+
+.step.exit-left {
+    transform: translateX(-40px);
+    opacity: 0;
+}
+
+
+
+
+
+/*NEWWW */
+.step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+    opacity: 0;
+    transform: translateX(80px) scale(.96);
+    transition:
+        transform 0.7s cubic-bezier(.16,1,.3,1);
+        opacity: 0s ease;
+
+    pointer-events: none;
+}
+
+.step.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+}
+
+.step.exit {
+    transform: translateX(-40px);
+    opacity: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+h1 {
+    font-weight: 300;
+    font-size: 40px;
+    letter-spacing: -1px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* OPTIONS */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option {
+    padding: 14px 28px;
+    border-radius: 999px;
+    border: 1px solid #ddd;
+    background: transparent;
+    cursor: pointer;
+    transition: 0.25s;
+    font-size: 16px;
+}
+
+.option.selected {
+    background: #111;
+    color: white;
+}
+
+/* BUTTON */
+.next {
+    margin-top: 40px;
+    padding: 14px 34px;
+    border-radius: 999px;
+    border: none;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.next:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* WHEEL PICKER */
+.wheel {
+    height: 220px;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    width: 200px;
+}
+
+.item {
+    font-size: 3.5rem;
+    text-align: center;
+    height: 70px;
+    line-height: 70px;
+    scroll-snap-align: center;
+    opacity: 0.25;
+    transition: 0.2s;
+}
+
+.item.active {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* INPUT */
+input {
+    font-size: 20px;
+    padding: 14px;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    text-align: center;
+    width: 260px;
+}
+
+
+
+
+
+
+/* --- ZAVRŠNI EKRAN (Poslano... 🍀) --- */
+.success-screen {
+    padding: 40px 0;
+    animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.clover {
+    font-size: 48px;
+    margin-left: 40px;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.status-text {
+    font-size: 28px;
+    font-weight: 300;
+    color: #111;
+    letter-spacing: -0.5px;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 2px;
+}
+
+/* Skakućuće točkice */
+.dots-loader span {
+    display: inline-block;
+    font-weight: 400;
+    animation: jump 1.4s infinite ease-in-out both;
+}
+
+.dots-loader span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.dots-loader span:nth-child(2) {
+    animation-delay: 0.16s;
+}
+
+.dots-loader span:nth-child(3) {
+    animation-delay: 0.32s;
+}
+
+
+
+
+
+
+
+
+
+.potvrdim {
+    font-size: 20px;
+    font-style: italic;
+}
+
+.predomislila {
+    text-decoration: underline;
+    color: #111;
+    opacity: 0.2;
+    font-size: 15px;
+    font-style: italic;
+    margin-top: 100px;
+}
+
+a {color: #111;}
+
+
+/* Animacije hoda gumba i točkica */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes jump {
+    0%, 80%, 100% { 
+        transform: translateY(0); 
+    }
+    40% { 
+        transform: translateY(-8px); 
+    }
+}
+
+
+
+
+
+
+
+/* Sakrivanje vodoravnog overflowa na razini aplikacije */
+.app {
+    overflow: hidden; /* Drži neaktivne korake skrivenima s desne strane */
+
+}
+
+/* Traka unutar koje koraci stoje u jednom redu */
+.steps-slider {
+    display: flex;
+    width: 200%; /* Jer imamo 4 koraka ukupno (4 * 100%) */
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Apple-like lagano kočenje */
+}
+
+
+
+
+
+/* --- PROGRESS BAR STILOVI --- */
+.progress-container {
+    width: calc(20% - 40px);
+    height: 6px;
+    background: #e5e5e5; /* Svijetlo siva pozadina */
+    border-radius: 999px;
+    margin: 20px auto 40px auto;
+    overflow: hidden;
+    transition: opacity 0.4s ease;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%; /* JS puni širinu */
+    background: #111111; /* Potpuno crna linija napretka */
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+
+
+
+
+
+.step.active .wheel{
+    animation:wheelIn .8s cubic-bezier(.22,1,.36,1);
+}
+
+@keyframes wheelIn{
+
+0%{
+opacity:0;
+transform:
+translateY(180px)
+scale(.92);
+}
+
+100%{
+opacity:1;
+transform:
+translateY(0)
+scale(1);
+}
+
+}
+
+
+
+
+.step.active h1{
+
+animation:fadeUp .5s .05s both;
+
+}
+
+.step.active .wheel{
+
+animation:fadeUp .7s .18s both;
+
+}
+
+.step.active button{
+
+animation:fadeUp .5s .35s both;
+
+}
+
+
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+transform:none;
+
+}
+
+}
