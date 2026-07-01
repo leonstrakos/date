@@ -23,6 +23,10 @@ app.get("/meet.html", (req, res) => {
     res.redirect("/date");
 });
 
+app.get("/date", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "meet.html"));
+});
+
 
 
 
