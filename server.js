@@ -19,6 +19,11 @@ app.get("/index.html", (req, res) => {
     res.redirect("/");
 });
 
+app.get("/meet.html", (req, res) => {
+    res.redirect("/date");
+});
+
+
 
 
 // Pomoćna funkcija za čitanje baze
