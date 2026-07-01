@@ -20,6 +20,14 @@ app.get("/index.html", (req, res) => {
 });
 
 
+app.get("/date", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "meet.html"));
+});
+
+app.get("/meet.html", (req, res) => {
+    res.redirect("/date");
+});
+
 
 // Pomoćna funkcija za čitanje baze
 async function readDB() {
