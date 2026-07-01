@@ -47,7 +47,7 @@ app.get('/api/status', async (req, res) => {
     
     const db = await readDB();
 
-    console.log("STATUS HIT:", db);
+    // console.log("STATUS HIT:", db);
 
     res.json({
         submitted: db.submitted || false,
@@ -97,6 +97,50 @@ app.post('/api/reset', async (req, res) => {
 
     res.json({ success: true });
 });
+
+
+
+
+
+
+
+
+app.post("/api/view", async (req, res) => {
+
+    const FILE = path.join(__dirname, "views.json");
+
+    let views = [];
+
+    if (await fs.pathExists(FILE)) {
+        views = await fs.readJson(FILE);
+    }
+
+    views.push({
+        timestamp: new Date().toLocaleString("hr-HR")
+    });
+
+    await fs.writeJson(FILE, views, { spaces: 4 });
+
+    res.json({ success: true });
+
+});
+
+
+app.get("/views", async (req, res) => {
+
+    const FILE = path.join(__dirname, "views.json");
+
+    if (!await fs.pathExists(FILE)) {
+        return res.json([]);
+    }
+
+    res.json(await fs.readJson(FILE));
+
+});
+
+
+
+
 
 
 

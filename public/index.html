@@ -108,6 +108,14 @@
 
 
 <script>
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("/api/view", {
+        method: "POST"
+    });
+});
+
+
 document.addEventListener("click", async (e) => {
     if (!e.target.closest(".predomislila")) return;
 
@@ -123,7 +131,13 @@ document.addEventListener("click", async (e) => {
 
 document.getElementById("startBtn").addEventListener("click", () => {
 
+
+ document.querySelector(".ferrari").style.display = "none"; 
+
     document.body.classList.add("page-leave");
+
+
+
 
     setTimeout(() => {
             window.location = "/date";
@@ -197,10 +211,6 @@ async function checkStatus() {
 
 checkStatus();
 setInterval(checkStatus, 2000);
-
-
-console.log("submitted element:", document.getElementById("submitted"));
-console.log("notSubmitted element:", document.getElementById("notSubmitted"));
 
 
 
