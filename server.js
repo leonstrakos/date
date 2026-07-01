@@ -15,6 +15,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 
+app.get("/index.html", (req, res) => {
+    res.redirect("/");
+});
+
+
 
 // Pomoćna funkcija za čitanje baze
 async function readDB() {
@@ -84,6 +89,7 @@ app.post('/api/reset', async (req, res) => {
 
     res.json({ success: true });
 });
+
 
 
 
