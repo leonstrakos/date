@@ -140,7 +140,7 @@ body.page-leave {
 .ferrari {
     position: fixed;
     bottom: 100px;
-    left: 0vw;
+    left: -20vw;
 
     font-size: 34px;
     z-index: 9999;
