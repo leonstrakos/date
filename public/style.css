@@ -159,7 +159,7 @@ body.page-leave {
     }
 
     to {
-               transform: translateX(130vw) scaleX(-1);
+               transform: translateX(170vw) scaleX(-1);
 
     }
 }
