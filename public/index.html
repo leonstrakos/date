@@ -21,18 +21,24 @@
 
 
     
-
 <div id="submitted" style="display:none;">
 
-<div class="potvrdeno">
-    <section class="status">
+    <!-- =========================
+         CONFIRMED SCREEN
+    ==========================  -->
+
+    
+    <section class="status active">
         <div class="anim-container text-center success-screen">
+
+<!-- 
+            <div class="status-text">
+                <span>POTVRĐENO</span>
+            </div> -->
 
             <div class="clover">✔️</div>
 
-            <div class="status-text">
-                <span>POTVRĐENO</span>
-            </div>
+
 
             <div class="status-text">
                 <div id="meeting-info"></div>
@@ -40,29 +46,47 @@
 
             <div class="status-text">
                 <span class="predomislila">
-                    <a href="/index.html">Predomislila sam se..</a>
+                    <a href="#">Predomislila sam se..</a>
                 </span>
             </div>
 
         </div>
     </section>
-</div>
+
 
    
-    <section class="status active ">
-                <div class="anim-container text-center success-screen">
-                    <div class="clover">🍀</div>
-                    <div class="status-text">
-                        <span>Poslano <br><span class="potvrdim"> provjeri malo kasnije</span></span>
-                        <span class="dots-loader">
-                            <span>.</span><span>.</span><span>.</span>
-                        </span>
-                    </div>
-                    <div class="status-text">
-                       <span class="predomislila"><a href="/index.html"> Predomislila sam se..</a> </span>
-                    </div>
-                </div>
-    </section>
+
+
+    <!-- =========================
+         WAITING SCREEN
+    ========================== -->
+
+    <!-- <section class="status active">
+        <div class="anim-container text-center success-screen">
+
+            <div class="clover">🍀</div>
+
+            <div class="status-text">
+                <span>
+                    Hvala!
+                    <br>
+                </span>
+
+                <span class="dots-loader">
+                    <span>.</span><span>.</span><span>.</span>
+                </span>
+            </div>
+
+            <div class="status-text">
+                <span class="predomislila">
+                    <a href="#">Predomislila sam se..</a>
+                </span>
+            </div>
+
+        </div>
+    </section> -->
+
+
 
 
 </div>
@@ -107,6 +131,25 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -148,17 +191,24 @@ document.getElementById("startBtn").addEventListener("click", () => {
 
 
 
-function formatMeeting(data) {
+    function formatMeeting(data) {
     const d = data?.data || {};
 
     return `
         <div class="meeting-card" style="margin-top:20px;">
-            <div>📅 ${d.day || '-'}. lipnja </div>
-            <div>🕒 ${d.time || '-'} sati</div>
-            <div>📍 &nbsp ${d.location || '-'}</div>
+            <div> ${d.day || '-'} lipnja </div>
+            <div> ${d.time || '-'} sati</div>
+            <div>${d.location || '-'}</div>
         </div>
     `;
 }
+
+
+
+
+
+
+
 
 function renderMeeting(data) {
     const el = document.getElementById("meeting-info");
