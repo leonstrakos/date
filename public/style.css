@@ -140,13 +140,13 @@ body.page-leave {
 .ferrari {
     position: fixed;
     bottom: 100px;
-    left: -30vw;
+    left: -50vw;
 
     font-size: 34px;
     z-index: 9999;
     pointer-events: none;
 
-    animation: driveFerrari 10s linear infinite;
+    animation: driveFerrari 13s linear infinite;
 
     transform: scaleX(-1); /* flip car */
 
