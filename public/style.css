@@ -206,7 +206,7 @@ body.page-leave {
 
 .history {
         position: fixed;
-    top: 80px;
+    bottom: 70px;
     left: -150vw;
 
     font-size: 14px;
@@ -228,7 +228,7 @@ transform:translateX(-137%);
 
 @keyframes history{
     from{
-        transform:translateX(-100%);
+        transform:translateX(-120%);
     }
 
     to{
