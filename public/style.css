@@ -218,18 +218,21 @@ body.page-leave {
     letter-spacing: 10px;
 
      pointer-events: none;
+transform:translateX(-137%);
 
+
+    
          animation: history 60s linear infinite;
 }
 
 
-@keyframes history {
-    from {
-        transform: translateX(0vw);
+@keyframes history{
+    from{
+        transform:translateX(-100%);
     }
 
-    to {
-        transform: translateX(300vw);
+    to{
+        transform:translateX(100vw);
     }
 }
 
