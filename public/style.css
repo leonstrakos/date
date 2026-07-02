@@ -140,7 +140,7 @@ body.page-leave {
 .ferrari {
     position: fixed;
     bottom: 100px;
-    left: -20vw;
+    left: -30vw;
 
     font-size: 34px;
     z-index: 9999;
@@ -159,7 +159,7 @@ body.page-leave {
     }
 
     to {
-               transform: translateX(100vw) scaleX(-1);
+               transform: translateX(130vw) scaleX(-1);
 
     }
 }
