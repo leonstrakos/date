@@ -136,6 +136,9 @@ app.get("/views", async (req, res) => {
 
     res.json(await fs.readJson(FILE));
 
+    console.log(req.headers['user-agent']);
+    console.log(req.ip);
+
 });
 
 
