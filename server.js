@@ -6,6 +6,8 @@ const PORT = 3005;
 const DB_FILE = path.join(__dirname, 'db.json');
 
 
+app.set("trust proxy", true);
+
 // Middleware za čitanje podataka iz formi / JSON-a
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -128,6 +130,10 @@ app.post("/api/view", async (req, res) => {
 
 app.get("/views", async (req, res) => {
 
+    console.log("IP:", req.ip);
+console.log("Forwarded:", req.headers["x-forwarded-for"]);
+console.log("UA:", req.headers["user-agent"]);
+
     const FILE = path.join(__dirname, "views.json");
 
     if (!await fs.pathExists(FILE)) {
@@ -136,8 +142,6 @@ app.get("/views", async (req, res) => {
 
     res.json(await fs.readJson(FILE));
 
-    console.log(req.headers['user-agent']);
-    console.log(req.ip);
 
 });
 
