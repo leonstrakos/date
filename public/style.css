@@ -207,7 +207,7 @@ body.page-leave {
 .history {
         position: fixed;
     top: 200px;
-    left: -50%;
+    left: -30%;
 
     font-size: 20px;
     z-index: 9999;
