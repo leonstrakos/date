@@ -242,7 +242,7 @@ transform:translateX(-137%);
 @media (min-width: 1800px) {
 
 .history {
-    top: 100px
+    top: 100px;
     left: 0%;
     transform:translateX(-35%);
 }
