@@ -240,16 +240,12 @@ transform:translateX(-137%);
 
 /* Override only on very large screens */
 @media (min-width: 1800px) {
-@keyframes history{
-    from{
-        transform:translateX(0%);
-    }
 
-    to{
-        transform:translateX(120%);
-    }
+.history {
+    left: 0%;
+    transform:translateX(-30%);
 }
-
+    
 }
 
 
