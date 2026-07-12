@@ -133,6 +133,7 @@ app.get("/views", async (req, res) => {
     console.log("IP:", req.ip);
 console.log("Forwarded:", req.headers["x-forwarded-for"]);
 console.log("UA:", req.headers["user-agent"]);
+console.log("Timestamp:", new Date().toLocaleString("hr-HR"));
 
     const FILE = path.join(__dirname, "views.json");
 
