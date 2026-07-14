@@ -213,49 +213,109 @@
 
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
-    fetch("/api/view", {
-        method: "POST"
-    });
-});
+let currentStep = 0;
+let isFullyUnlocked = false; // Sprječava UI treperenje unutar intervala statusa
+const questionsText = [
+    "Gdje smo se upoznali?",
+    "Film koji smo gledali?",
+    "Ime tima na kapi?"
+];
 
+document.addEventListener("DOMContentLoaded", () => {
+    fetch("/api/view", { method: "POST" });
+    buildSudokuDOM();
+    loadSecurityQuestion();
+});
 
 document.addEventListener("click", async (e) => {
     if (!e.target.closest(".predomislila")) return;
-
     console.log("Predomislila se");
-
     const res = await fetch('/api/reset', { method: 'POST' });
     const data = await res.json();
-
     if (data.success) {
-        await checkStatus(); // IMPORTANT: wait for UI sync
+        isFullyUnlocked = false;
+        await checkStatus(); 
     }
 });
 
 document.getElementById("startBtn").addEventListener("click", () => {
-
-
- document.querySelector(".ferrari").style.display = "none"; 
-  document.querySelector(".history").style.display = "none"; 
-
+    document.querySelector(".ferrari").style.display = "none"; 
+    document.querySelector(".history").style.display = "none"; 
     document.body.classList.add("page-leave");
-
-
-
-
-    setTimeout(() => {
-            window.location = "/date";
-    }, 200);
-
+    setTimeout(() => { window.location = "/date"; }, 200);
 });
 
+// LOGIKA ZA SUDOKU ZAKLJUČAVANJE
+function buildSudokuDOM() {
+    const grid = document.getElementById('sudokuGrid');
+    grid.innerHTML = '';
+    for(let i=0; i<81; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.id = `cell-${i}`;
+        grid.appendChild(cell);
+    }
+}
 
+function loadSecurityQuestion() {
+    if (currentStep < questionsText.length) {
+        document.getElementById('secQuestion').innerText = questionsText[currentStep];
+        document.getElementById('secInput').value = '';
+        document.getElementById('secError').style.display = 'none';
+        document.getElementById('cryptoProgress').style.width = ((currentStep / questionsText.length) * 100) + '%';
+    }
+}
 
+async function submitSecurityAnswer() {
+    const answer = document.getElementById('secInput').value;
+    try {
+        const res = await fetch('/api/verify-security', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ step: currentStep, answer: answer })
+        });
+        const data = await res.json();
 
-    function formatMeeting(data) {
+        if (data.correct) {
+            animateSudokuBatch(data.newCells);
+            currentStep++;
+            
+            if (currentStep < questionsText.length) {
+                setTimeout(loadSecurityQuestion, 1200);
+            } else {
+                document.getElementById('cryptoProgress').style.width = '100%';
+                isFullyUnlocked = true;
+                setTimeout(revealMainBirthdayPage, 1600);
+            }
+        } else {
+            document.getElementById('secError').style.display = 'block';
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function animateSudokuBatch(cells) {
+    document.querySelectorAll('.cell').forEach(c => c.classList.remove('just-added'));
+    cells.forEach((cellData, index) => {
+        setTimeout(() => {
+            const cell = document.getElementById(`cell-${cellData.flatIdx}`);
+            if (cell) {
+                cell.innerText = cellData.v;
+                cell.classList.add('reveal', 'just-added');
+            }
+        }, index * 30);
+    });
+}
+
+function revealMainBirthdayPage() {
+    // Sakrij kompletni anonimni lock screen, prikaži originalnu "Za Helenu" stranicu
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('unlockedBirthdayContent').style.display = 'block';
+}
+
+function formatMeeting(data) {
     const d = data?.data || {};
-
     return `
         <div class="meeting-card" style="margin-top:20px;">
             <div> ${d.day || '-'} lipnja </div>
@@ -265,76 +325,45 @@ document.getElementById("startBtn").addEventListener("click", () => {
     `;
 }
 
-
-
-
-
-
-
-
 function renderMeeting(data) {
     const el = document.getElementById("meeting-info");
     if (!el) return;
-
     el.innerHTML = formatMeeting(data);
 }
 
-
 async function checkStatus() {
-    console.log("CHECKING STATUS...");
-
     try {
         const res = await fetch('/api/status', { cache: "no-store" });
         const data = await res.json();
 
-        console.log("STATUS RESPONSE:", data);
-
         if (data.submitted === true) {
-            console.log("SHOW SUBMITTED UI");
-
             document.getElementById('notSubmitted').style.display = 'none';
             document.getElementById('submitted').style.display = 'block';
-
-
-
-                                renderMeeting(data);
-
-
-
+            renderMeeting(data);
         } else {
-            console.log("SHOW NOT SUBMITTED UI");
-
-
-
-
-            document.getElementById('notSubmitted').style.display = 'block';
             document.getElementById('submitted').style.display = 'none';
+            document.getElementById('notSubmitted').style.display = 'block';
+            
+            // Kontrola prikaza ovisno o tome je li riješila pitalicu
+            if (isFullyUnlocked) {
+                document.getElementById('lockScreen').style.display = 'none';
+                document.getElementById('unlockedBirthdayContent').style.display = 'block';
+            } else {
+                document.getElementById('lockScreen').style.display = 'block';
+                document.getElementById('unlockedBirthdayContent').style.display = 'none';
+            }
         }
-
     } catch (err) {
         console.error("STATUS ERROR:", err);
     }
 }
 
-
-
-
-
+document.getElementById('secInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') submitSecurityAnswer();
+});
 
 checkStatus();
 setInterval(checkStatus, 2000);
-
-
-
-
-
-
-
-
-
-
-
-    
 
   
 
