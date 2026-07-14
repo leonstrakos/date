@@ -46,58 +46,6 @@ async function writeDB(data) {
 
 
 
-// ==========================================
-// SIGURNA PROVJERA I GENERIRANJE BATCHEVA
-// ==========================================
-const solutionGridFlat = [
-    5, 2, 4, 1, 6, 3, 9, 8, 7,
-    9, 1, 6, 7, 8, 5, 2, 3, 4,
-    8, 7, 3, 4, 9, 2, 5, 1, 6,
-    1, 9, 5, 3, 4, 8, 7, 6, 2,
-    3, 6, 7, 9, 2, 1, 4, 5, 8,
-    4, 8, 2, 6, 5, 7, 1, 9, 3,
-    6, 4, 8, 2, 1, 9, 3, 7, 5,
-    7, 5, 1, 8, 3, 4, 6, 2, 9,
-    2, 3, 9, 5, 7, 6, 8, 4, 1
-];
-
-// Flat indeksi (0-80) podijeljeni u 3 vala iskakanja (24, 24, preostala 33)
-const cellBatchesFlat = [
-    [1, 4, 11, 15, 18, 23, 30, 34, 37, 41, 44, 47, 51, 54, 58, 61, 65, 68, 73, 75, 78, 8, 9, 21],
-    [2, 6, 13, 17, 19, 25, 27, 32, 38, 42, 48, 52, 55, 59, 63, 66, 70, 74, 77, 5, 12, 22, 33, 45],
-    [0, 3, 7, 10, 14, 16, 20, 24, 26, 28, 29, 31, 35, 36, 39, 40, 43, 46, 49, 50, 53, 56, 57, 60, 62, 64, 67, 69, 71, 72, 76, 79, 80]
-];
-
-const secureAnswers = [
-    ["exit"],
-    ["pizza movie"],
-    ["ferrari", "scuderia ferrari"]
-];
-
-app.post('/api/verify-security', (req, res) => {
-    const { step, answer } = req.body;
-
-    if (step === undefined || step >= secureAnswers.length) {
-        return res.status(400).json({ correct: false });
-    }
-
-    const cleanUserAnswer = answer ? answer.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "";
-    const validOptions = secureAnswers[step];
-
-    if (validOptions.includes(cleanUserAnswer)) {
-        // Generiraj pripadajući paket brojeva iz matrice rješenja za taj korak
-        const batchIndices = cellBatchesFlat[step];
-        const newCells = batchIndices.map(idx => ({ flatIdx: idx, v: solutionGridFlat[idx] }));
-
-        if (step === secureAnswers.length - 1) {
-            console.log("HELENA UNLOCKED");
-        }
-        return res.json({ correct: true, newCells: newCells });
-    } else {
-        return res.json({ correct: false });
-    }
-});
-
 
 
 
