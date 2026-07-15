@@ -53,7 +53,7 @@
             font-style: italic;
             font-size: 0.8rem;
             color: black;
-            margin-top: 200px;
+            margin-top: 100px;
             margin-bottom: 20px;
         }
 
@@ -63,7 +63,16 @@
     margin: 0 auto;  
             max-width:60%;
             height:200px;
-            opacity:0.3;/*
+            opacity:0.7;
+            
+            /* DODAJ OVO: */
+    pointer-events: none;      /* Onemogućuje sve klikove i dodire */
+    user-select: none;         /* Sprečava označavanje/plavi sjaj oko slike */
+    -webkit-user-drag: none;  
+            
+            /*
+
+            
     Automatski centrira sliku vodoravno */
 }
 
@@ -104,7 +113,7 @@
 
             <p id="secError" style="color: #FFB6C1; font-size: 13px; margin-top: 8px; text-align: center; display: none;">ako nisi ona makni se sa stranicee 💨</p>
 
-            <img class="molecule" src="petrichor.png">
+            <img class="molecule" src="petrichor.png" draggable: false;>
             
             <div class="sudoku-grid" id="sudokuGrid"></div>
         </div>
