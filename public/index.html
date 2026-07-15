@@ -58,10 +58,12 @@
 
 
         .molecule {
-            width: 60%;
-            margin-left: 20%;
-            margin-right:20%;
-        }
+    display: block;     /* Pretvara sliku u blok element */
+    width: 60%;
+    margin: 0 auto;     /* Automatski centrira sliku vodoravno */
+}
+
+    
     </style>
 </head>
 <body>
@@ -98,7 +100,7 @@
 
             <p id="secError" style="color: #FFB6C1; font-size: 13px; margin-top: 8px; text-align: center; display: none;">ako nisi ona makni se sa stranicee 💨</p>
 
-            <img class="molecule" scr="petrichor.png">
+            <img class="molecule" src="petrichor.png">
             
             <div class="sudoku-grid" id="sudokuGrid"></div>
         </div>
