@@ -83,22 +83,72 @@ app.post('/api/submit', async (req, res) => {
 });
 
 
+// 1. Definicija točnog odgovora i Sudoku mreže za slanje
+const solutionGridFlat = [
+    5, 2, 4, 1, 6, 3, 9, 8, 7,
+    9, 1, 6, 7, 8, 5, 2, 3, 4,
+    8, 7, 3, 4, 9, 2, 5, 1, 6,
+    1, 9, 5, 3, 4, 8, 7, 6, 2,
+    3, 6, 7, 9, 2, 1, 4, 5, 8,
+    4, 8, 2, 6, 5, 7, 1, 9, 3,
+    6, 4, 8, 2, 1, 9, 3, 7, 5,
+    7, 5, 1, 8, 3, 4, 6, 2, 9,
+    2, 3, 9, 5, 7, 6, 8, 4, 1
+];
 
+// Odgovor na pitanje "Sta piše na kapi?" (dodane varijacije za svaki slučaj)
+const secureAnswers = ["ferrari", "scuderia ferrari"];
 
+// 2. Potpuno blindirana ruta /date (provjera cookieja)
+app.get("/date", (req, res) => {
+    const cookies = req.headers.cookie || '';
+    
+    // Ako klijent ima valjan cookie, pusti ga na rođendanski dogovor
+    if (cookies.includes('helena_unlocked=true')) {
+        res.sendFile(path.join(__dirname, "public", "meet.html"));
+    } else {
+        // Ako nema cookie, baci ga natrag na početnu s pitalicom
+        res.redirect("/");
+    }
+});
 
+app.get("/meet.html", (req, res) => {
+    res.redirect("/date");
+});
 
+// 3. Provjera odgovora i postavljanje kolačića (cookie)
+app.post('/api/verify-security', (req, res) => {
+    const { answer } = req.body;
+    
+    // Čišćenje unosa (malo-veliko slovo, razmaci, kvačice)
+    const cleanUserAnswer = answer ? answer.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "";
 
-// 3. Ruta ako klikne "Predomislila sam se"
+    if (secureAnswers.includes(cleanUserAnswer)) {
+        console.log("HELENA UNLOCKED 🔓"); // Ispis u PM2 logovima
+        
+        // Postavlja se HttpOnly cookie koji traje 24 sata (ne može se ukrasti preko konzole/JS-a)
+        res.setHeader('Set-Cookie', 'helena_unlocked=true; Path=/; Max-Age=86400; HttpOnly; SameSite=Strict');
+        
+        // Vraćamo ispravnu mrežu za animaciju na frontendu
+        return res.json({ correct: true, grid: solutionGridFlat });
+    } else {
+        return res.json({ correct: false });
+    }
+});
+
+// 4. Resetiranje stanja i brisanje kolačića ako klikne "Predomislila sam se"
 app.post('/api/reset', async (req, res) => {
     const db = await readDB();
-
     db.submitted = false;
     db.data = null;
-
     await writeDB(db);
 
+    // Uništavamo cookie tako da ga postavimo na prazno i stavimo datum u prošlost
+    res.setHeader('Set-Cookie', 'helena_unlocked=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly');
     res.json({ success: true });
 });
+
+
 
 
 
@@ -144,42 +194,7 @@ console.log("Timestamp:", new Date().toLocaleString("hr-HR"));
     res.json(await fs.readJson(FILE));
 
 
-});
-
-
-
-// ==========================================
-// SIGURNOSNA SERVER LOGIKA (SAMO JEDNO PITANJE)
-// ==========================================
-const solutionGridFlat = [
-    5, 2, 4, 1, 6, 3, 9, 8, 7,
-    9, 1, 6, 7, 8, 5, 2, 3, 4,
-    8, 7, 3, 4, 9, 2, 5, 1, 6,
-    1, 9, 5, 3, 4, 8, 7, 6, 2,
-    3, 6, 7, 9, 2, 1, 4, 5, 8,
-    4, 8, 2, 6, 5, 7, 1, 9, 3,
-    6, 4, 8, 2, 1, 9, 3, 7, 5,
-    7, 5, 1, 8, 3, 4, 6, 2, 9,
-    2, 3, 9, 5, 7, 6, 8, 4, 1
-];
-
-app.post('/api/verify-security', (req, res) => {
-    const { answer } = req.body;
-    
-    // Normalizacija teksta (pretvara u mala slova, miče kvačice i prazne razmake na rubovima)
-    const cleanUserAnswer = answer ? answer.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "";
-    
-    // Točan odgovor pohranjen isključivo ovdje na poslužitelju
-    if (cleanUserAnswer === "exit") {
-        console.log("HELENA UNLOCKED"); // Vidljivo u tvom pm2 logu
-        return res.json({ correct: true, grid: solutionGridFlat });
-    } else {
-        return res.json({ correct: false });
-    }
-});
-
-
-
+})
 
 
 app.listen(PORT, () => {
