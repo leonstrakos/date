@@ -81,11 +81,7 @@
         <div class="card">
             <p class="security">Pitanje da drugi ne vide <br></p>
 
-            <p id="questionText" class="description" style="font-weight: 500; margin-bottom: 10px; margin-top:100px;">
-                Gdje smo se upoznali?
-            </p>
-
-            <input type="text" id="secInput" placeholder="Upiši odgovor..." autocomplete="off" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #d2d2d7; background: #f5f5f7; font-family: inherit; font-size: 14px; outline: none; margin-bottom: 10px;">
+            <input type="text" id="secInput" placeholder="Sta piše na kapi?" autocomplete="off" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #d2d2d7; background: #f5f5f7; font-family: inherit; font-size: 14px; outline: none; margin-bottom: 10px;">
             
             <button id="secSubmitBtn" style="background-color: #FFB6C1; color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: 600; cursor: pointer;">Potvrdi</button>
 
@@ -140,13 +136,6 @@
 
 <script>
 let pageUnlocked = false; 
-let currentStep = 0; 
-
-// Lista pitanja i pratećih placeholder teksta za input polje
-const questionsList = [
-    { text: "Gdje smo se upoznali?", placeholder: "Upiši odgovor..." },
-    { text: "Što piše na kapi?", placeholder: "Upiši što piše na kapi..." }
-];
 
 document.addEventListener("DOMContentLoaded", () => {
     fetch("/api/view", { method: "POST" });
@@ -162,9 +151,6 @@ document.addEventListener("click", async (e) => {
 
     if (data.success) {
         pageUnlocked = false; 
-        currentStep = 0;
-        document.getElementById('questionText').innerText = questionsList[0].text;
-        document.getElementById('secInput').placeholder = questionsList[0].placeholder;
         await checkStatus();
     }
 });
@@ -179,6 +165,7 @@ document.getElementById("startBtn").addEventListener("click", () => {
     }, 200);
 });
 
+// GENERIRANJE SUDOKU GRID-A U LOCK SCREENU
 function buildSudokuDOM() {
     const grid = document.getElementById('sudokuGrid');
     if (!grid) return;
@@ -186,35 +173,25 @@ function buildSudokuDOM() {
     for(let i = 0; i < 81; i++) {
         const cell = document.createElement('div');
         cell.classList.add('cell');
-        cell.id = `cell-${i}`; // ISPRAVLJENO: Dodani ispravni kosi navodnici
+        cell.id = `cell-${i}`; // ISPRAVLJENO: Dodani ispravni backticks
         grid.appendChild(cell);
     }
 }
 
+// SLANJE ODGOVORA NA SERVER
 async function verifySecurity() {
     const userInput = document.getElementById('secInput').value;
     try {
         const res = await fetch('/api/verify-security', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ answer: userInput, step: currentStep })
+            body: JSON.stringify({ answer: userInput })
         });
         const data = await res.json();
 
         if (data.correct) {
             document.getElementById('secError').style.display = 'none';
-            
-            if (data.final) {
-                // Ako je zadnje pitanje riješeno, pokreni Sudoku animaciju
-                animateSudokuAndUnlock(data.grid);
-            } else {
-                // Inače, skoči na iduće pitanje i očisti input polje
-                currentStep++;
-                document.getElementById('questionText').innerText = questionsList[currentStep].text;
-                document.getElementById('secInput').value = '';
-                document.getElementById('secInput').placeholder = questionsList[currentStep].placeholder;
-                document.getElementById('secInput').focus();
-            }
+            animateSudokuAndUnlock(data.grid);
         } else {
             document.getElementById('secError').style.display = 'block';
         }
@@ -223,6 +200,7 @@ async function verifySecurity() {
     }
 }
 
+// SUDOKU ANIMACIJA I OTKLJUČAVANJE STRANICE
 function animateSudokuAndUnlock(flatGrid) {
     let indices = Array.from({length: 81}, (_, i) => i);
     for (let i = indices.length - 1; i > 0; i--) {
@@ -232,7 +210,7 @@ function animateSudokuAndUnlock(flatGrid) {
 
     indices.forEach((idx, order) => {
         setTimeout(() => {
-            const cell = document.getElementById(`cell-${idx}`); // ISPRAVLJENO: Dodani ispravni kosi navodnici
+            const cell = document.getElementById(`cell-${idx}`); // ISPRAVLJENO: Dodani ispravni backticks
             if (cell) {
                 cell.innerText = flatGrid[idx];
                 cell.classList.add('reveal');
