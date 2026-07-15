@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="hr">
 <head>
@@ -60,8 +61,8 @@
         .molecule {
     z-index:2;/* Pretvara sliku u blok element */
     margin: 0 auto;    
-            height:100px;
-            opacity:0.6;/* Automatski centrira sliku vodoravno */
+            height:200px;
+            opacity:0.3;/* Automatski centrira sliku vodoravno */
 }
 
     
@@ -183,6 +184,9 @@ document.getElementById("startBtn").addEventListener("click", () => {
 
 // GENERIRANJE SUDOKU GRID-A U LOCK SCREENU
 function buildSudokuDOM() {
+
+    document.querySelector(".molecule").style.display = "none";
+    
     const grid = document.getElementById('sudokuGrid');
     if (!grid) return;
     grid.innerHTML = '';
