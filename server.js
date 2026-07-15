@@ -148,7 +148,35 @@ console.log("Timestamp:", new Date().toLocaleString("hr-HR"));
 
 
 
+// ==========================================
+// SIGURNOSNA SERVER LOGIKA (SAMO JEDNO PITANJE)
+// ==========================================
+const solutionGridFlat = [
+    5, 2, 4, 1, 6, 3, 9, 8, 7,
+    9, 1, 6, 7, 8, 5, 2, 3, 4,
+    8, 7, 3, 4, 9, 2, 5, 1, 6,
+    1, 9, 5, 3, 4, 8, 7, 6, 2,
+    3, 6, 7, 9, 2, 1, 4, 5, 8,
+    4, 8, 2, 6, 5, 7, 1, 9, 3,
+    6, 4, 8, 2, 1, 9, 3, 7, 5,
+    7, 5, 1, 8, 3, 4, 6, 2, 9,
+    2, 3, 9, 5, 7, 6, 8, 4, 1
+];
 
+app.post('/api/verify-security', (req, res) => {
+    const { answer } = req.body;
+    
+    // Normalizacija teksta (pretvara u mala slova, miče kvačice i prazne razmake na rubovima)
+    const cleanUserAnswer = answer ? answer.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "";
+    
+    // Točan odgovor pohranjen isključivo ovdje na poslužitelju
+    if (cleanUserAnswer === "exit") {
+        console.log("HELENA UNLOCKED"); // Vidljivo u tvom pm2 logu
+        return res.json({ correct: true, grid: solutionGridFlat });
+    } else {
+        return res.json({ correct: false });
+    }
+});
 
 
 
