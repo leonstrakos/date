@@ -36,7 +36,7 @@ const solutionGridFlat = [
 ];
 
 // Točni odgovori za pitanje u placeholderu: "Sta piše na kapi?"
-const secureAnswers = ["ferrari", "scuderia ferrari", "micka", "marelice", "kajsije", "kajsija", "marelica", "orah"];
+const secureAnswers = ["ferrari", "scuderia ferrari", "micka", "marelice", "kajsije", "kajsija", "marelica", "orah", "kibla"];
 
 // Pomoćna funkcija za čitanje baze podataka
 async function readDB() {
