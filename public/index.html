@@ -59,21 +59,25 @@
 
 
         .molecule {
-    z-index:2;/* Pretvara sliku u blok element */
-    margin: 0 auto;  
-            max-width:60%;
-            height:200px;
-            opacity:0.7;
+    z-in /* ISPRAVLJENO: Slika je sada apsolutno pozicionirana kao vodeni žig */
+        .molecule {
+            position: absolute;
+            top: 30%;               /* Pozicionira je u gornji/srednji dio kartice */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;             /* Iza teksta i gumba, ispred pozadine */
+            width: 50%;             /* Malo smanjena kako ne bi dominirala ekranom */
+            max-height: 120px;
+            object-fit: contain;
+            opacity: 0.12;          /* Vrlo suptilna (12% vidljivosti) da se tekst i dalje lagano čita */
             
-            /* DODAJ OVO: */
-    pointer-events: none;      /* Onemogućuje sve klikove i dodire */
-    user-select: none;         /* Sprečava označavanje/plavi sjaj oko slike */
-    -webkit-user-drag: none;  
-            
-            /*
+            /* Onemogućavanje interakcije */
+            pointer-events: none;      
+            user-select: none;         
+            -webkit-user-drag: none;  
+        }
 
             
-    Automatski centrira sliku vodoravno */
 }
 
     
