@@ -78,7 +78,7 @@ app.post('/api/verify-security', (req, res) => {
     const cleanUserAnswer = answer ? answer.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "";
 
     if (secureAnswers.includes(cleanUserAnswer)) {
-        console.log("HELENA UNLOCKED 🔓"); 
+        console.log("NETKO USAO 🙏🙏🙏🙏🙏🙏"); 
         
         // Postavlja se kolačić koji traje 24 sata (siguran, nedostupan JS-u na klijentu)
         res.setHeader('Set-Cookie', 'helena_unlocked=true; Path=/; Max-Age=86400; HttpOnly; SameSite=Strict');
